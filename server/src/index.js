@@ -10,8 +10,20 @@ import categoryRoutes from './routes/categoryRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import statsRoutes from './routes/statsRoutes.js';
+import { db } from './db/connection.js';
 
 dotenv.config();
+
+// Tự động nạp bảng và dữ liệu mẫu nếu chưa có dữ liệu
+try {
+  const tableCheck = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='hanghoa'").get();
+  if (!tableCheck) {
+    console.log('⚡ Chưa có bảng dữ liệu, đang nạp dữ liệu mẫu ban đầu...');
+    await import('./db/seed.js');
+  }
+} catch (err) {
+  console.log('Database init status:', err.message);
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

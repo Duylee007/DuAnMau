@@ -10,6 +10,8 @@ export default defineConfig({
         target: 'http://localhost:5000',
         changeOrigin: true
       }
-    }
+    },
+    // Cho phép React SPA tự xử lý routing theo pathname (vd: /admin, /about)
+    historyApiFallback: true
   }
 });

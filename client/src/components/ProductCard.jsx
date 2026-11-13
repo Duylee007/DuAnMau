@@ -11,7 +11,7 @@ export default function ProductCard({ product, onAddToCart, onOpenDetail }) {
 
   return (
     <div className="product-card">
-      <div className="card-img-wrap">
+      <div className="card-img-wrap" onClick={() => onOpenDetail(product)} style={{ cursor: 'pointer' }}>
         <img
           src={product.hinh_anh || 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop'}
           alt={product.ten_hanghoa}
@@ -33,8 +33,13 @@ export default function ProductCard({ product, onAddToCart, onOpenDetail }) {
       </div>
 
       <div className="card-body">
-        <span className="card-cat">{product.ten_loai || 'Áo Thun'}</span>
-        <h3 className="card-title" title={product.ten_hanghoa}>
+        <span className="card-cat">{product.ten_loai || 'Áo Thun & Denim'}</span>
+        <h3
+          className="card-title"
+          title={product.ten_hanghoa}
+          onClick={() => onOpenDetail(product)}
+          style={{ cursor: 'pointer' }}
+        >
           {product.ten_hanghoa}
         </h3>
 

@@ -3,7 +3,8 @@ import {
   createOrder,
   getMyOrders,
   getAllOrders,
-  updateOrderStatus
+  updateOrderStatus,
+  deleteOrder
 } from '../controllers/orderController.js';
 import { verifyToken, verifyAdmin } from '../middlewares/authMiddleware.js';
 
@@ -21,5 +22,6 @@ router.post('/', (req, res, next) => {
 router.get('/my-orders', verifyToken, getMyOrders);
 router.get('/', verifyAdmin, getAllOrders);
 router.put('/:id/status', verifyAdmin, updateOrderStatus);
+router.delete('/:id', verifyAdmin, deleteOrder);
 
 export default router;

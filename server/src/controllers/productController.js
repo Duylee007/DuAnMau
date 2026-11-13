@@ -9,6 +9,7 @@ export const getProducts = (req, res) => {
       category,
       search,
       featured,
+      discount,
       sort = 'latest'
     } = req.query;
 
@@ -25,13 +26,26 @@ export const getProducts = (req, res) => {
     }
 
     if (search) {
-      whereConditions.push('(h.ten_hanghoa LIKE ? OR h.mo_ta LIKE ?)');
-      params.push(`%${search}%`, `%${search}%`);
+      const terms = search.split(/[|,]/).map(t => t.trim()).filter(Boolean);
+      if (terms.length > 1) {
+        const orClauses = terms.map(() => '(h.ten_hanghoa LIKE ? OR h.mo_ta LIKE ?)').join(' OR ');
+        whereConditions.push(`(${orClauses})`);
+        for (const t of terms) {
+          params.push(`%${t}%`, `%${t}%`);
+        }
+      } else {
+        whereConditions.push('(h.ten_hanghoa LIKE ? OR h.mo_ta LIKE ?)');
+        params.push(`%${search}%`, `%${search}%`);
+      }
     }
 
     if (featured !== undefined && featured !== '') {
       whereConditions.push('h.noi_bat = ?');
       params.push(featured === 'true' || featured === '1' ? 1 : 0);
+    }
+
+    if (discount === 'true' || discount === '1') {
+      whereConditions.push('h.gia_khuyen_mai > 0 AND h.gia_khuyen_mai < h.gia');
     }
 
     const whereClause = whereConditions.length > 0 ? `WHERE ${whereConditions.join(' AND ')}` : '';

@@ -17,11 +17,14 @@ Bạn **không cần bật XAMPP** nữa, dự án chạy độc lập 100%.
 
 ## 🔑 2. Tài khoản thử nghiệm có sẵn
 
-- **Quản trị viên (Admin):**
+- **Quản trị viên (Admin Portal - Tách riêng biệt):**
+  - Cách vào: Bấm nút **"🛡️ Quản trị viên"** trên thanh Menu Header (hoặc link ở Footer / truy cập `http://localhost:3000/#admin`).
+  - Giao diện đăng nhập quản trị riêng biệt hoàn toàn, không nằm chung với khách hàng.
   - Tên đăng nhập: `admin1`
   - Mật khẩu: `admin123`
-  - *Quyền hạn:* Quản lý sản phẩm (Thêm/Sửa/Xóa), quản lý đơn hàng (đổi trạng thái giao hàng), thống kê doanh thu.
+  - *Tính năng:* Thống kê doanh thu, quản lý danh mục, thêm/sửa/xóa sản phẩm, cập nhật trạng thái đơn hàng.
 - **Khách hàng (Customer):**
+  - Cách vào: Bấm nút **"Đăng nhập"** trên Header.
   - Email: `user@gmail.com`
   - Mật khẩu: `123456`
   - Hoặc bạn có thể tự bấm **Đăng ký** tài khoản mới trên giao diện.

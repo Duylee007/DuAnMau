@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { X, User, Lock, Mail, Phone, MapPin, Shield, Check } from 'lucide-react';
+import { X, User, Lock, Mail, Phone, MapPin, Check } from 'lucide-react';
 
 export default function AuthModal({ isOpen, onClose, onAuthSuccess, showToast }) {
-  const [tab, setTab] = useState('login'); // 'login' | 'register' | 'admin'
+  const [tab, setTab] = useState('login'); // 'login' | 'register'
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Form states
+  // Form states for Customer
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
   const [registerForm, setRegisterForm] = useState({
     ten_khachhang: '',
@@ -15,7 +15,6 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, showToast })
     dien_thoai: '',
     dia_chi: ''
   });
-  const [adminForm, setAdminForm] = useState({ username: '', password: '' });
 
   if (!isOpen) return null;
 
@@ -32,7 +31,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, showToast })
       const data = await res.json();
       if (data.success) {
         onAuthSuccess(data.user, data.token);
-        showToast('Chào mừng bạn, ' + data.user.ten_khachhang);
+        showToast('Chào mừng bạn, ' + (data.user.ten_khachhang || 'Khách hàng'));
         onClose();
       } else {
         setError(data.message);
@@ -69,55 +68,38 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, showToast })
     }
   };
 
-  const handleAdminLogin = async (e) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
-    try {
-      const res = await fetch('/api/auth/admin-login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(adminForm)
-      });
-      const data = await res.json();
-      if (data.success) {
-        onAuthSuccess(data.user, data.token);
-        showToast('Đăng nhập Quản trị viên thành công!');
-        onClose();
-      } else {
-        setError(data.message);
-      }
-    } catch (err) {
-      setError('Lỗi kết nối máy chủ');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-card" style={{ maxWidth: '460px' }} onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h3 style={{ fontSize: '1.2rem', fontWeight: 700 }}>Tài khoản</h3>
+          <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a' }}>Tài khoản Khách Hàng</h3>
           <button className="modal-close-btn" onClick={onClose}>
-            <X size={22} />
+            <X size={20} />
           </button>
         </div>
 
         {/* Tab selector */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', borderBottom: '1px solid var(--border-subtle)', background: 'rgba(255,255,255,0.02)' }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            borderBottom: '1px solid var(--border-subtle)',
+            background: '#f8fafc'
+          }}
+        >
           <button
             type="button"
             onClick={() => { setTab('login'); setError(''); }}
             style={{
-              padding: '0.85rem 0.5rem',
-              background: 'transparent',
+              padding: '0.9rem 0.5rem',
+              background: tab === 'login' ? '#ffffff' : 'transparent',
               border: 'none',
-              borderBottom: tab === 'login' ? '2px solid var(--primary)' : 'none',
-              color: tab === 'login' ? '#fff' : 'var(--text-muted)',
-              fontWeight: 600,
-              fontSize: '0.85rem',
-              cursor: 'pointer'
+              borderBottom: tab === 'login' ? '2px solid #0f172a' : 'none',
+              color: tab === 'login' ? '#0f172a' : 'var(--text-muted)',
+              fontWeight: 700,
+              fontSize: '0.92rem',
+              cursor: 'pointer',
+              transition: 'all 0.2s'
             }}
           >
             Đăng nhập
@@ -126,39 +108,35 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, showToast })
             type="button"
             onClick={() => { setTab('register'); setError(''); }}
             style={{
-              padding: '0.85rem 0.5rem',
-              background: 'transparent',
+              padding: '0.9rem 0.5rem',
+              background: tab === 'register' ? '#ffffff' : 'transparent',
               border: 'none',
-              borderBottom: tab === 'register' ? '2px solid var(--primary)' : 'none',
-              color: tab === 'register' ? '#fff' : 'var(--text-muted)',
-              fontWeight: 600,
-              fontSize: '0.85rem',
-              cursor: 'pointer'
+              borderBottom: tab === 'register' ? '2px solid #0f172a' : 'none',
+              color: tab === 'register' ? '#0f172a' : 'var(--text-muted)',
+              fontWeight: 700,
+              fontSize: '0.92rem',
+              cursor: 'pointer',
+              transition: 'all 0.2s'
             }}
           >
             Đăng ký
-          </button>
-          <button
-            type="button"
-            onClick={() => { setTab('admin'); setError(''); }}
-            style={{
-              padding: '0.85rem 0.5rem',
-              background: 'transparent',
-              border: 'none',
-              borderBottom: tab === 'admin' ? '2px solid #ec4899' : 'none',
-              color: tab === 'admin' ? '#ec4899' : 'var(--text-muted)',
-              fontWeight: 600,
-              fontSize: '0.85rem',
-              cursor: 'pointer'
-            }}
-          >
-            Quản trị
           </button>
         </div>
 
         <div className="modal-body">
           {error && (
-            <div style={{ background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239,68,68,0.3)', color: '#f87171', padding: '0.65rem 1rem', borderRadius: '8px', fontSize: '0.88rem', marginBottom: '1.25rem' }}>
+            <div
+              style={{
+                background: '#fef2f2',
+                border: '1px solid #fecaca',
+                color: '#dc2626',
+                padding: '0.75rem 1rem',
+                borderRadius: '8px',
+                fontSize: '0.88rem',
+                marginBottom: '1.25rem',
+                fontWeight: 600
+              }}
+            >
               {error}
             </div>
           )}
@@ -167,7 +145,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, showToast })
           {tab === 'login' && (
             <form onSubmit={handleLogin}>
               <div className="form-group">
-                <label className="form-label">Email</label>
+                <label className="form-label">Email tài khoản</label>
                 <input
                   type="email"
                   className="form-input"
@@ -189,17 +167,17 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, showToast })
                 />
               </div>
 
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', marginBottom: '1.25rem' }}>
-                💡 Tài khoản thử nghiệm: <code>user@gmail.com</code> / Mật khẩu: <code>123456</code>
+              <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '1.25rem', background: '#f1f5f9', padding: '0.65rem 0.85rem', borderRadius: '6px' }}>
+                💡 Tài khoản mẫu: <code>user@gmail.com</code> / Mật khẩu: <code>123456</code>
               </div>
 
               <button
                 type="submit"
                 className="btn-primary"
                 disabled={loading}
-                style={{ width: '100%', justifyContent: 'center', padding: '0.8rem' }}
+                style={{ width: '100%', justifyContent: 'center', padding: '0.85rem', fontSize: '0.95rem' }}
               >
-                {loading ? 'Đang xác thực...' : 'Đăng nhập ngay'}
+                {loading ? 'Đang đăng nhập...' : 'Đăng nhập Mua sắm'}
               </button>
             </form>
           )}
@@ -218,28 +196,31 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, showToast })
                   onChange={(e) => setRegisterForm({ ...registerForm, ten_khachhang: e.target.value })}
                 />
               </div>
+
               <div className="form-group">
-                <label className="form-label">Email *</label>
+                <label className="form-label">Email đăng ký *</label>
                 <input
                   type="email"
                   className="form-input"
                   required
-                  placeholder="name@example.com"
+                  placeholder="email@example.com"
                   value={registerForm.email}
                   onChange={(e) => setRegisterForm({ ...registerForm, email: e.target.value })}
                 />
               </div>
+
               <div className="form-group">
                 <label className="form-label">Mật khẩu *</label>
                 <input
                   type="password"
                   className="form-input"
                   required
-                  placeholder="Ít nhất 6 ký tự"
+                  placeholder="Tối thiểu 6 ký tự"
                   value={registerForm.password}
                   onChange={(e) => setRegisterForm({ ...registerForm, password: e.target.value })}
                 />
               </div>
+
               <div className="form-group">
                 <label className="form-label">Số điện thoại</label>
                 <input
@@ -250,12 +231,13 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, showToast })
                   onChange={(e) => setRegisterForm({ ...registerForm, dien_thoai: e.target.value })}
                 />
               </div>
+
               <div className="form-group">
-                <label className="form-label">Địa chỉ</label>
+                <label className="form-label">Địa chỉ giao hàng</label>
                 <input
                   type="text"
                   className="form-input"
-                  placeholder="Địa chỉ giao nhận hàng"
+                  placeholder="Số nhà, tên đường, phường/xã, quận/huyện..."
                   value={registerForm.dia_chi}
                   onChange={(e) => setRegisterForm({ ...registerForm, dia_chi: e.target.value })}
                 />
@@ -265,55 +247,9 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, showToast })
                 type="submit"
                 className="btn-primary"
                 disabled={loading}
-                style={{ width: '100%', justifyContent: 'center', padding: '0.8rem' }}
+                style={{ width: '100%', justifyContent: 'center', padding: '0.85rem', fontSize: '0.95rem' }}
               >
                 {loading ? 'Đang đăng ký...' : 'Tạo tài khoản mới'}
-              </button>
-            </form>
-          )}
-
-          {/* TAB ADMIN */}
-          {tab === 'admin' && (
-            <form onSubmit={handleAdminLogin}>
-              <div style={{ background: 'rgba(236,72,153,0.1)', border: '1px solid rgba(236,72,153,0.3)', padding: '0.75rem', borderRadius: '8px', fontSize: '0.84rem', color: '#f472b6', marginBottom: '1.25rem' }}>
-                <Shield size={16} style={{ display: 'inline', marginRight: 5, verticalAlign: 'middle' }} />
-                Đăng nhập dành cho Ban Quản trị hệ thống (Admin).
-              </div>
-
-              <div className="form-group">
-                <label className="form-label">Tên đăng nhập (Username)</label>
-                <input
-                  type="text"
-                  className="form-input"
-                  required
-                  placeholder="admin1"
-                  value={adminForm.username}
-                  onChange={(e) => setAdminForm({ ...adminForm, username: e.target.value })}
-                />
-              </div>
-              <div className="form-group">
-                <label className="form-label">Mật khẩu Admin</label>
-                <input
-                  type="password"
-                  className="form-input"
-                  required
-                  placeholder="••••••••"
-                  value={adminForm.password}
-                  onChange={(e) => setAdminForm({ ...adminForm, password: e.target.value })}
-                />
-              </div>
-
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', marginBottom: '1.25rem' }}>
-                🔑 Tài khoản admin mặc định: <code>admin1</code> / Mật khẩu: <code>admin123</code>
-              </div>
-
-              <button
-                type="submit"
-                className="btn-primary"
-                disabled={loading}
-                style={{ width: '100%', justifyContent: 'center', padding: '0.8rem', background: 'linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%)' }}
-              >
-                {loading ? 'Đang đăng nhập...' : 'Vào trang Quản trị'}
               </button>
             </form>
           )}

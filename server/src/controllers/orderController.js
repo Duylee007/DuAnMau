@@ -137,3 +137,15 @@ export const updateOrderStatus = (req, res) => {
     res.status(500).json({ success: false, message: 'Lỗi server: ' + error.message });
   }
 };
+
+// Admin: Xóa đơn hàng
+export const deleteOrder = (req, res) => {
+  try {
+    const { id } = req.params;
+    db.prepare('DELETE FROM chitiet_hoadon WHERE id_hoadon = ?').run(id);
+    db.prepare('DELETE FROM hoadon WHERE id_hoadon = ?').run(id);
+    res.json({ success: true, message: 'Đã xóa đơn hàng thành công' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Lỗi server: ' + error.message });
+  }
+};

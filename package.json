@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "Full-stack Shop Ao Thun with ReactJS and NodeJS",
   "main": "server/src/index.js",
+  "engines": {
+    "node": ">=22.5.0"
+  },
   "scripts": {
-    "build": "cd client && npm install && npm run build && cd ../server && npm install && node src/db/seed.js",
-    "start": "cd server && node src/index.js",
-    "seed": "cd server && node src/db/seed.js"
+    "build": "npm --prefix client install && npm --prefix client run build && npm --prefix server install && node server/src/db/seed.js",
+    "start": "node server/src/index.js",
+    "seed": "node server/src/db/seed.js"
   },
   "keywords": [],
   "author": "Duylee007",

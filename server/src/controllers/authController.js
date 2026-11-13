@@ -144,3 +144,57 @@ export const getMe = (req, res) => {
     res.status(500).json({ success: false, message: 'Lỗi server: ' + error.message });
   }
 };
+
+// Admin: Lấy danh sách khách hàng kèm số đơn hàng và chi tiêu
+export const getAllCustomers = (req, res) => {
+  try {
+    const customers = db.prepare(`
+      SELECT k.id_khachhang, k.ten_khachhang, k.email, k.dien_thoai, k.dia_chi, k.ngay_dang_ky,
+             COUNT(h.id_hoadon) AS so_don_hang,
+             COALESCE(SUM(h.tong_tien), 0) AS tong_chi_tieu
+      FROM khachhang k
+      LEFT JOIN hoadon h ON k.id_khachhang = h.id_khachhang
+      GROUP BY k.id_khachhang
+      ORDER BY k.id_khachhang DESC
+    `).all();
+    res.json({ success: true, customers });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Lỗi server: ' + error.message });
+  }
+};
+
+// Admin: Xóa khách hàng
+export const deleteCustomer = (req, res) => {
+  try {
+    const { id } = req.params;
+    db.prepare('DELETE FROM khachhang WHERE id_khachhang = ?').run(id);
+    res.json({ success: true, message: 'Đã xóa tài khoản khách hàng thành công' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Lỗi server: ' + error.message });
+  }
+};
+
+// Admin: Đổi mật khẩu tài khoản quản trị
+export const changeAdminPassword = (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+    if (!oldPassword || !newPassword) {
+      return res.status(400).json({ success: false, message: 'Vui lòng điền đầy đủ mật khẩu cũ và mới' });
+    }
+    const adminId = req.user.id;
+    const admin = db.prepare('SELECT * FROM admin WHERE id_admin = ?').get(adminId);
+    if (!admin) {
+      return res.status(404).json({ success: false, message: 'Không tìm thấy tài khoản quản trị' });
+    }
+
+    if (!bcrypt.compareSync(oldPassword, admin.password)) {
+      return res.status(400).json({ success: false, message: 'Mật khẩu cũ không chính xác' });
+    }
+
+    const hash = bcrypt.hashSync(newPassword, 10);
+    db.prepare('UPDATE admin SET password = ? WHERE id_admin = ?').run(hash, adminId);
+    res.json({ success: true, message: 'Đổi mật khẩu quản trị thành công!' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Lỗi server: ' + error.message });
+  }
+};
