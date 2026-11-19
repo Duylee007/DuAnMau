@@ -420,14 +420,14 @@ const products = [
   [
     'Set 3 Quần Boxer Nam Cotton Kháng Khuẩn Thoáng Mát',
     240000, 189000,
-    'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=600&h=600&fit=crop',
+    'https://images.pexels.com/photos/5698856/pexels-photo-5698856.jpeg?w=600&h=600&fit=crop',
     'Hộp 3 quần lót boxer nam sợi bông cotton hữu cơ mềm mại, cạp chun êm ái không để lại vết hằn trên da.',
     9, 130, 1
   ],
   [
     'Quần Boxer Nam Vải Modal Sợi Gỗ Sồi Co Giãn 4 Chiều',
     110000, 89000,
-    'https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?w=600&h=600&fit=crop',
+    'https://images.pexels.com/photos/5698851/pexels-photo-5698851.jpeg?w=600&h=600&fit=crop',
     'Quần lót nam vải modal siêu mềm mượt như lụa, thấm hút mồ hôi gấp đôi cotton, kháng khuẩn ion bạc ngăn mùi.',
     9, 150, 0
   ],
