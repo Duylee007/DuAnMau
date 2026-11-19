@@ -17,6 +17,10 @@ export default function ProductCard({ product, onAddToCart, onOpenDetail }) {
           alt={product.ten_hanghoa}
           className="card-img"
           loading="lazy"
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop';
+          }}
         />
         <div className="card-badges">
           {product.noi_bat === 1 && (

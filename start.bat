@@ -5,6 +5,17 @@ echo     DANG KHOI DONG BACKEND VA FRONTEND SHOP AO
 echo         (KHONG CAN XAMPP - CHAY HOAN TOAN MOI)
 echo ===================================================
 echo.
+
+if not exist "server\node_modules" (
+    echo [!] Phat hien thieu thu vien Backend, dang tu dong cai dat...
+    cd server && call npm install && cd ..
+)
+
+if not exist "client\node_modules" (
+    echo [!] Phat hien thieu thu vien Frontend, dang tu dong cai dat...
+    cd client && call npm install && cd ..
+)
+
 echo 1. Dang mo Backend API (Port 5000)...
 start "Backend API - Port 5000" cmd /k "cd server && npm run dev"
 

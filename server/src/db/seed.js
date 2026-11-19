@@ -154,7 +154,7 @@ const products = [
   [
     'Áo Polo Nam ProCOOL++™ Dệt Tổ Ong Mát Lạnh',
     350000, 289000,
-    'https://images.unsplash.com/photo-1625910513413-5fc4e5e6727a?w=600&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1571455786673-9d9d6c194f90?w=600&h=600&fit=crop',
     'Áo polo ứng dụng công nghệ sợi ProCOOL++ siêu mát, cấu trúc dệt tổ ong thoát nhiệt tức thì, kháng khuẩn khử mùi vượt trội.',
     2, 150, 1
   ],
@@ -205,7 +205,7 @@ const products = [
   [
     'Áo Sơ Mi Nam Ngắn Tay Cổ Trụ Phối Túi Nắp Hè',
     350000, 0,
-    'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1603252109303-2751441dd157?w=600&h=600&fit=crop',
     'Thiết kế cổ trụ trẻ trung phóng khoáng, form rộng thoải mái cho những buổi dạo biển hay cafe gặp gỡ bạn bè cuối tuần.',
     5, 50, 0
   ],
@@ -312,7 +312,7 @@ const products = [
   [
     'Quần Jean Nam Smart Jeans™ Slim-fit Co Giãn Siêu Thoáng',
     450000, 389000,
-    'https://images.unsplash.com/photo-1542272604-780c96856592?w=600&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1604176354204-9268737828e4?w=600&h=600&fit=crop',
     'Dòng Smart Jeans™ độc quyền với công nghệ sợi co giãn 4 chiều, giữ form ôm gọn gàng, thấm hút mồ hôi tối đa.',
     1, 120, 1
   ],
@@ -404,14 +404,14 @@ const products = [
   [
     'Quần Tây Nam Smart Trousers Lưng Chun Ẩn Co Giãn',
     460000, 389000,
-    'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=600&h=600&fit=crop',
     'Quần tây đột phá với cạp chun ẩn 2 bên hông tự co giãn theo vòng eo, chất vải chống nhăn đứng form hoàn hảo.',
     6, 70, 1
   ],
   [
     'Quần Tây Nam Dáng Ôm Xếp Ly Chuẩn Phong Cách Công Sở',
     480000, 399000,
-    'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1555689502-c4b22d76c56f?w=600&h=600&fit=crop',
     'Quần tây âu công sở có ly trước lịch lãm, chất vải tuyết mưa cao cấp co giãn nhẹ, giữ nếp ly sắc nét sau khi giặt.',
     6, 60, 0
   ],
